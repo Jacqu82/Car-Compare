@@ -1,0 +1,12 @@
+{
+  "autoload": {
+    "psr-4": {
+      "": "src/"
+    }
+  },
+  "require": {
+    "twig/twig": "^2.0",
+    "symfony/var-dumper": "^4.1",
+    "twig/extensions": "^1.5"
+  }
+}
