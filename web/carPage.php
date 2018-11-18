@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
@@ -7,6 +9,14 @@ use Service\Container;
 $container = new Container($configuration);
 $carLoader = $container->getCarLoader();
 $car = $carLoader->getOneById($_GET['id']);
+
+if (isset($_POST['delete'])) {
+    $carRepository = $container->getCarRepository();
+    $carRepository->delete($_GET['id']);
+
+    $_SESSION['delete'] = "Poprawnie usunołeś {$car->getName()}!";
+    header('Location: index.php');
+}
 
 ?>
 
@@ -42,8 +52,11 @@ $car = $carLoader->getOneById($_GET['id']);
             <td><?php echo $car->getPower(); ?></td>
             <td><?php echo $car->getAcceleration(); ?></td>
             <td><?php echo $car->getTopSpeed(); ?></td>
-            <td><a href="editCar.php?id=<?php echo $car->getId(); ?>" class="btn btn-warning">Edytuj</a><a href="#"
-                                                                                                           class="btn btn-danger">Usuń</a>
+            <td>
+                <a href="editCar.php?id=<?php echo $car->getId(); ?>" class="btn btn-warning">Edytuj</a>
+                <form method="post" action="#">
+                    <button type="submit" class="btn btn-danger" name="delete">Usuń</button>
+                </form>
             </td>
         </tr>
         </tbody>

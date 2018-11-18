@@ -95,4 +95,13 @@ class CarRepository
 
         return $car;
     }
+
+    public function delete($id)
+    {
+        $result = $this->pdo->prepare("DELETE FROM cars WHERE id = :id");
+        $result->bindParam('id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        return true;
+    }
 }

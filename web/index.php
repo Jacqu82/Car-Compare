@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
@@ -20,6 +22,15 @@ $cars = $carLoader->getAll();
 
 <div class="container">
 
+    <?php
+    if (isset($_SESSION['delete'])) {
+    echo '<div class="alert alert-success flash-message">';
+        echo '<strong>' . $_SESSION['delete'] . '</strong>';
+        echo '</div>';
+    unset($_SESSION['delete']);
+    }
+    ?>
+
     <h1 class="text-center text-uppercase">Porównywarka samochodów</h1>
 
     <?php foreach ($cars as $car): ?>
@@ -29,5 +40,7 @@ $cars = $carLoader->getAll();
     <?php endforeach; ?>
 
 </div>
+
+<?php require_once '../widgets/scripts.php'; ?>
 </body>
 </html>
