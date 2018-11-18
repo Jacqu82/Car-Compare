@@ -48,15 +48,14 @@ class CarLoader
     private function createCarObjectFromData(array $carData)
     {
         $car = (new Car())
-                ->setId($carData['id'])
-                ->setName($carData['name'])
-                ->setNumberOfCylinders($carData['number_of_cylinders'])
-                ->setEngineCapacity($carData['engine_capacity'])
-                ->setPower($carData['power'])
-                ->setAcceleration($carData['acceleration'])
-                ->setTopSpeed($carData['top_speed'])
-                ->setCreatedAt($carData['created_at'])
-        ;
+            ->setId($carData['id'])
+            ->setName($carData['name'])
+            ->setNumberOfCylinders($carData['number_of_cylinders'])
+            ->setEngineCapacity($carData['engine_capacity'])
+            ->setPower($carData['power'])
+            ->setAcceleration($carData['acceleration'])
+            ->setTopSpeed($carData['top_speed'])
+            ->setCreatedAt($carData['created_at']);
 
         return $car;
     }
