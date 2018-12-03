@@ -2,8 +2,6 @@
 
 namespace Service;
 
-use Model\Car;
-use Model\Image;
 use PDO;
 
 class Container

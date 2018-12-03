@@ -5,6 +5,7 @@ session_start();
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
+use Service\FlashMessagesService;
 
 $container = new Container($configuration);
 $carLoader = $container->getCarLoader();
@@ -25,16 +26,11 @@ $firstLetter = '';
 
     <?php
     if (isset($_SESSION['delete'])) {
-        echo '<div class="alert alert-success flash-message">';
-        echo '<strong>' . $_SESSION['delete'] . '</strong>';
-        echo '</div>';
+        FlashMessagesService::setFlashMessage('success', $_SESSION['delete']);
         unset($_SESSION['delete']);
     }
-
     if (isset($_SESSION['validate_success'])) {
-        echo '<div class="alert alert-success flash-message">';
-        echo '<strong>' . $_SESSION['validate_success'] . '</strong>';
-        echo '</div>';
+        FlashMessagesService::setFlashMessage('success', $_SESSION['validate_success']);
         unset($_SESSION['validate_success']);
     }
     ?>

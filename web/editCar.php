@@ -5,6 +5,7 @@ session_start();
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
+use Service\FlashMessagesService;
 
 $container = new Container($configuration);
 $carLoader = $container->getCarLoader();
@@ -37,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ->setTopSpeed($topSpeed);
             $container->getCarRepository()->update($car);
 
-            header('Location: carPage.php?id=' . $car->getId());
             $_SESSION['edit_success'] = 'Poprawnie edytowano samochód :)';
+            header('Location: carPage.php?id=' . $car->getId());
         }
     }
 }
@@ -56,15 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h1 class="text-center text-uppercase">Edytuj samochód</h1>
 
-    <?php
-    if (isset($_SESSION['validate_success'])) {
-        echo '<div class="alert alert-success flash-message">';
-        echo '<strong>' . $_SESSION['validate_success'] . '</strong>';
-        echo '</div>';
-        unset($_SESSION['validate_success']);
-    }
-    ?>
-
     <form action="#" method="post">
         <div class="form-group">
             <label for="name">Nazwa</label>
@@ -72,9 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <?php
         if (isset($_SESSION['e_name'])) {
-            echo '<div class="alert alert-warning flash-message">';
-            echo '<strong>' . $_SESSION['e_name'] . '</strong>';
-            echo '</div>';
+            FlashMessagesService::setFlashMessage('danger', $_SESSION['e_name']);
             unset($_SESSION['e_name']);
         }
         ?>

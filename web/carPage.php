@@ -5,6 +5,7 @@ session_start();
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
+use Service\FlashMessagesService;
 use Service\ImageService;
 
 $container = new Container($configuration);
@@ -36,10 +37,12 @@ $imageService = new ImageService($container);
         header('Location: index.php');
     }
     if (isset($_SESSION['edit_success'])) {
-        echo '<div class="alert alert-success flash-message">';
-        echo '<strong>' . $_SESSION['edit_success'] . '</strong>';
-        echo '</div>';
+        FlashMessagesService::setFlashMessage('success', $_SESSION['edit_success']);
         unset($_SESSION['edit_success']);
+    }
+    if (isset($_SESSION['edit_image'])) {
+        FlashMessagesService::setFlashMessage('success', $_SESSION['edit_image']);
+        unset($_SESSION['edit_image']);
     }
     ?>
     <h1 class="text-center text-uppercase"><?php echo $car->getName(); ?></h1>

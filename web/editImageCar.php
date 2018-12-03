@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
@@ -14,6 +16,7 @@ $imageService = new ImageService($container);
 if (isset($_FILES['image']['name'])) {
     $imageService->updateImage($car->getId(), $car->getName());
 
+    $_SESSION['edit_image'] = 'Poprawnie edytowano zdjęcie :)';
     header('Location: carPage.php?id=' . $car->getId());
 }
 

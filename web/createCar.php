@@ -6,6 +6,7 @@ require __DIR__ . '/../autoload.php';
 
 use Model\Car;
 use Service\Container;
+use Service\FlashMessagesService;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['name'])) {
@@ -63,9 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <?php
         if (isset($_SESSION['e_name'])) {
-            echo '<div class="alert alert-warning flash-message">';
-            echo '<strong>' . $_SESSION['e_name'] . '</strong>';
-            echo '</div>';
+            FlashMessagesService::setFlashMessage('danger', $_SESSION['e_name']);
             unset($_SESSION['e_name']);
         }
         ?>
