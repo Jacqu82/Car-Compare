@@ -34,8 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ->setTopSpeed($topSpeed);
 
             $container = new Container($configuration);
-            $carRepository = $container->getCarRepository();
-            $carRepository->saveToDb($car);
+            $container->getCarRepository()->saveToDb($car);
+
+            header('Location: index.php');
 
             $_SESSION['validate_success'] = 'Poprawnie dodano samochód do bazy :)';
         }
@@ -55,16 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container">
     <h1 class="text-center text-uppercase">Dodaj samochód</h1>
 
-    <?php
-    if (isset($_SESSION['validate_success'])) {
-        echo '<div class="alert alert-success flash-message">';
-        echo '<strong>' . $_SESSION['validate_success'] . '</strong>';
-        echo '</div>';
-        unset($_SESSION['validate_success']);
-    }
-    ?>
-
-    <form action="#" method="post">
+    <form action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Nazwa</label>
             <input type="text" id="name" class="form-control" name="name">
@@ -96,6 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
             <label for="speed">Prędkość maksymalna</label>
             <input type="number" id="speed" class="form-control" name="speed">
+        </div>
+        <div class="form-group">
+            <input type="file" name="image"/>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-success">Zapisz</button>

@@ -5,18 +5,13 @@ session_start();
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
+use Service\ImageService;
 
 $container = new Container($configuration);
 $carLoader = $container->getCarLoader();
 $car = $carLoader->getOneById($_GET['id']);
-
-if (isset($_POST['delete'])) {
-    $carRepository = $container->getCarRepository();
-    $carRepository->delete($_GET['id']);
-
-    $_SESSION['delete'] = "Poprawnie usunołeś {$car->getName()}!";
-    header('Location: index.php');
-}
+$path = $container->getImageRepository()->findOneByCarId($_GET['id']);
+$imageService = new ImageService($container);
 
 ?>
 
@@ -29,9 +24,25 @@ if (isset($_POST['delete'])) {
 <?php include '../widgets/header.php'; ?>
 
 <div class="container">
+    <?php
+    if (isset($_POST['delete'])) {
+        $carRepository = $container->getCarRepository();
+        $carRepository->delete($_GET['id']);
+        $pathToDelete = $path['path'];
+        $imageService->deleteFile($pathToDelete);
+        $imageService->deleteEmptyDirectory($car->getId());
 
+        $_SESSION['delete'] = "Poprawnie usunołeś {$car->getName()}!";
+        header('Location: index.php');
+    }
+    if (isset($_SESSION['edit_success'])) {
+        echo '<div class="alert alert-success flash-message">';
+        echo '<strong>' . $_SESSION['edit_success'] . '</strong>';
+        echo '</div>';
+        unset($_SESSION['edit_success']);
+    }
+    ?>
     <h1 class="text-center text-uppercase"><?php echo $car->getName(); ?></h1>
-
     <table class="table">
         <thead>
         <tr>
@@ -61,8 +72,9 @@ if (isset($_POST['delete'])) {
         </tr>
         </tbody>
     </table>
-
+    <img src="<?php echo $path['path']; ?>" alt="Obrazek auta" class="center"/>
+    <a href="editImageCar.php?id=<?php echo $car->getId(); ?>" class="btn btn-warning">Edytuj zdjęcie</a>
 </div>
-
+<?php require_once '../widgets/scripts.php'; ?>
 </body>
 </html>

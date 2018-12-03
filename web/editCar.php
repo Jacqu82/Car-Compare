@@ -8,7 +8,8 @@ use Service\Container;
 
 $container = new Container($configuration);
 $carLoader = $container->getCarLoader();
-$car = $carLoader->getOneById($_GET['id']);
+$carId = $_GET['id'];
+$car = $carLoader->getOneById($carId);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['name'])) {
@@ -34,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ->setPower($power)
                 ->setAcceleration($acceleration)
                 ->setTopSpeed($topSpeed);
-            $carRepository = $container->getCarRepository();
-            $carRepository->update($car);
+            $container->getCarRepository()->update($car);
 
-            $_SESSION['validate_success'] = 'Poprawnie edytowano samochód :)';
+            header('Location: carPage.php?id=' . $car->getId());
+            $_SESSION['edit_success'] = 'Poprawnie edytowano samochód :)';
         }
     }
 }
@@ -79,11 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?>
         <div class="form-group">
             <label for="cylinder">Liczba cylindrów</label>
-            <input type="number" id="cylinder" class="form-control" name="cylinder" value="<?php echo $car->getNumberOfCylinders(); ?>">
+            <input type="number" id="cylinder" class="form-control" name="cylinder"
+                   value="<?php echo $car->getNumberOfCylinders(); ?>">
         </div>
         <div class="form-group">
             <label for="capacity">Pojemność silnika</label>
-            <input type="number" id="capacity" class="form-control" name="capacity" value="<?php echo $car->getEngineCapacity(); ?>">
+            <input type="number" id="capacity" class="form-control" name="capacity"
+                   value="<?php echo $car->getEngineCapacity(); ?>">
         </div>
         <div class="form-group">
             <label for="power">Moc</label>
@@ -91,11 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="form-group">
             <label for="acceleration">Przyspieszenie</label>
-            <input type="text" id="acceleration" class="form-control" name="acceleration" value="<?php echo $car->getAcceleration(); ?>">
+            <input type="text" id="acceleration" class="form-control" name="acceleration"
+                   value="<?php echo $car->getAcceleration(); ?>">
         </div>
         <div class="form-group">
             <label for="speed">Prędkość maksymalna</label>
-            <input type="number" id="speed" class="form-control" name="speed" value="<?php echo $car->getTopSpeed(); ?>">
+            <input type="number" id="speed" class="form-control" name="speed"
+                   value="<?php echo $car->getTopSpeed(); ?>">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-warning">Edytuj</button>

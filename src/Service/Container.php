@@ -2,6 +2,8 @@
 
 namespace Service;
 
+use Model\Car;
+use Model\Image;
 use PDO;
 
 class Container
@@ -12,7 +14,11 @@ class Container
 
     private $carLoader;
 
+    private $imageService;
+
     private $carRepository;
+
+    private $imageRepository;
 
     public function __construct(array $configuration)
     {
@@ -48,15 +54,33 @@ class Container
         return $this->carLoader;
     }
 
+    public function getImageService()
+    {
+        if ($this->imageService === null) {
+            $this->imageService = new ImageService($this);
+        }
+
+        return $this->imageService;
+    }
+
     /**
      * @return CarRepository
      */
     public function getCarRepository()
     {
         if ($this->carRepository === null) {
-            $this->carRepository = new CarRepository($this->getPDO());
+            $this->carRepository = new CarRepository($this->getPDO(), $this);
         }
 
         return $this->carRepository;
+    }
+
+    public function getImageRepository()
+    {
+        if ($this->imageRepository === null) {
+            $this->imageRepository = new ImageRepository($this->getPDO());
+        }
+
+        return $this->imageRepository;
     }
 }

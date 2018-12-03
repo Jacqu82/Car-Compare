@@ -8,10 +8,12 @@ use PDO;
 class CarRepository
 {
     private $pdo;
+    private $container;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo, Container $container)
     {
         $this->pdo = $pdo;
+        $this->container = $container;
     }
 
     public function saveToDb(Car $car)
@@ -22,20 +24,22 @@ class CarRepository
         $power = $car->getPower();
         $acceleration = $car->getAcceleration();
         $topSpeed = $car->getTopSpeed();
+        $imagePath = $car->getImagePath();
 
-        $sql = "INSERT INTO cars (name, number_of_cylinders, engine_capacity, power, acceleration, top_speed)
-                    VALUES (:name, :number_of_cylinders, :engine_capacity, :power, :acceleration, :top_speed)";
+        $sql = "INSERT INTO cars (name, number_of_cylinders, engine_capacity, power, acceleration, top_speed, image_path)
+                    VALUES (:name, :number_of_cylinders, :engine_capacity, :power, :acceleration, :top_speed, :image_path)";
 
-        $pdo = $this->pdo;
-        $result = $pdo->prepare($sql);
+        $result = $this->pdo->prepare($sql);
         $result->bindParam('name', $name, PDO::PARAM_STR);
         $result->bindParam('number_of_cylinders', $numberOfCylinders, PDO::PARAM_INT);
         $result->bindParam('engine_capacity', $engineCapacity, PDO::PARAM_INT);
         $result->bindParam('power', $power, PDO::PARAM_INT);
         $result->bindParam('acceleration', $acceleration, PDO::PARAM_STR);
         $result->bindParam('top_speed', $topSpeed, PDO::PARAM_INT);
-
+        $result->bindParam('image_path', $imagePath, PDO::PARAM_STR);
         $result->execute();
+
+        $this->container->getImageService()->saveImage($car, $this->pdo->lastInsertId());
 
         return true;
     }
@@ -67,7 +71,6 @@ class CarRepository
         $result->bindParam('power', $power, PDO::PARAM_INT);
         $result->bindParam('acceleration', $acceleration, PDO::PARAM_STR);
         $result->bindParam('top_speed', $topSpeed, PDO::PARAM_INT);
-
         $result->execute();
 
         return true;
