@@ -43,8 +43,6 @@ $admin = $container->loggedAdmin();
 
     <h1 class="text-center text-uppercase">Witaj <?php echo $admin['login'] ?>!</h1>
 
-    <h3><a href="createCar.php" class="btn btn-success">Dodaj samochód do bazy</a></h3>
-
     <?php foreach ($cars as $car): ?>
         <?php $path = $container->getImageRepository()->findOneByCarId($car->getId()); ?>
         <?php if ($firstLetter != $car->getName()[0]): ?>

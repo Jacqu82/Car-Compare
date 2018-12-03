@@ -19,8 +19,6 @@ class Car
 
     private $topSpeed;
 
-    private $imagePath;
-
     private $createdAt;
 
     public function getId()
@@ -105,16 +103,6 @@ class Car
         $this->topSpeed = $topSpeed;
 
         return $this;
-    }
-
-    public function getImagePath()
-    {
-        return $this->imagePath;
-    }
-
-    public function setImagePath($imagePath)
-    {
-        $this->imagePath = $imagePath;
     }
 
     public function getCreatedAt()

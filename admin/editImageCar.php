@@ -18,11 +18,15 @@ $car = $carLoader->getOneById($_GET['id']);
 $path = $container->getImageRepository()->findOneByCarId($_GET['id']);
 $imageService = new ImageService($container);
 
-if (isset($_FILES['image']['name'])) {
-    $imageService->updateImage($car->getId(), $car->getName());
+//dump($_FILES['image']['error']);die;
 
-    $_SESSION['edit_image'] = 'Poprawnie edytowano zdjęcie :)';
-    header('Location: carPage.php?id=' . $car->getId());
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'updateImage') {
+    if ($_FILES['image']['error'] == 0) {
+        $imageService->updateImage($car->getId(), $car->getName());
+
+        $_SESSION['edit_image'] = 'Poprawnie edytowano zdjęcie :)';
+        header('Location: carPage.php?id=' . $car->getId());
+    }
 }
 
 ?>
@@ -44,6 +48,7 @@ if (isset($_FILES['image']['name'])) {
         <div class="form-group">
             <input type="file" name="image"/>
         </div>
+        <input type="hidden" name="action" value="updateImage"/>
         <div class="form-group">
             <button type="submit" class="btn btn-success">Zapisz</button>
         </div>
