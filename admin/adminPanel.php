@@ -7,10 +7,16 @@ require __DIR__ . '/../autoload.php';
 use Service\Container;
 use Service\FlashMessagesService;
 
+if (!isset($_SESSION['admin'])) {
+    header('Location: ../web/index.php');
+    exit();
+}
+
 $container = new Container($configuration);
 $carLoader = $container->getCarLoader();
 $cars = $carLoader->getAll();
 $firstLetter = '';
+$admin = $container->loggedAdmin();
 
 ?>
 
@@ -24,8 +30,20 @@ $firstLetter = '';
 
 <div class="container">
 
-    <h1 class="text-center text-uppercase">Porównywarka samochodów</h1>
+    <?php
+    if (isset($_SESSION['delete'])) {
+        FlashMessagesService::setFlashMessage('success', $_SESSION['delete']);
+        unset($_SESSION['delete']);
+    }
+    if (isset($_SESSION['validate_success'])) {
+        FlashMessagesService::setFlashMessage('success', $_SESSION['validate_success']);
+        unset($_SESSION['validate_success']);
+    }
+    ?>
 
+    <h1 class="text-center text-uppercase">Witaj <?php echo $admin['login'] ?>!</h1>
+
+    <h3><a href="createCar.php" class="btn btn-success">Dodaj samochód do bazy</a></h3>
 
     <?php foreach ($cars as $car): ?>
         <?php $path = $container->getImageRepository()->findOneByCarId($car->getId()); ?>

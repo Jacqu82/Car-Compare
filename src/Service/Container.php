@@ -14,6 +14,8 @@ class Container
 
     private $imageService;
 
+    private $adminRepository;
+
     private $carRepository;
 
     private $imageRepository;
@@ -62,6 +64,18 @@ class Container
     }
 
     /**
+     * @return AdminRepository
+     */
+    public function getAdminRepository()
+    {
+        if ($this->adminRepository === null) {
+            $this->adminRepository = new AdminRepository($this->getPDO());
+        }
+
+        return $this->adminRepository;
+    }
+
+    /**
      * @return CarRepository
      */
     public function getCarRepository()
@@ -73,6 +87,9 @@ class Container
         return $this->carRepository;
     }
 
+    /**
+     * @return ImageRepository
+     */
     public function getImageRepository()
     {
         if ($this->imageRepository === null) {
@@ -80,5 +97,14 @@ class Container
         }
 
         return $this->imageRepository;
+    }
+
+    public function loggedAdmin()
+    {
+        if (isset($_SESSION['adminId'])) {
+            return $this->getAdminRepository()->findOneById($_SESSION['adminId']);
+        }
+
+        return false;
     }
 }

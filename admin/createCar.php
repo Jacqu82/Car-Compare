@@ -8,6 +8,11 @@ use Model\Car;
 use Service\Container;
 use Service\FlashMessagesService;
 
+if (!isset($_SESSION['admin'])) {
+    header('Location: ../web/index.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['name'])) {
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
@@ -37,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $container = new Container($configuration);
             $container->getCarRepository()->saveToDb($car);
 
-            header('Location: index.php');
+            header('Location: adminPanel.php');
 
             $_SESSION['validate_success'] = 'Poprawnie dodano samochód do bazy :)';
         }
