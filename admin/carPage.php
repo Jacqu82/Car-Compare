@@ -39,7 +39,7 @@ $imageService = new ImageService($container);
         $imageService->deleteEmptyDirectory($car->getId());
 
         $_SESSION['delete'] = "Poprawnie usunołeś {$car->getName()}!";
-        header('Location: index.php');
+        header('Location: adminPanel.php');
     }
     if (isset($_SESSION['edit_success'])) {
         FlashMessagesService::setFlashMessage('success', $_SESSION['edit_success']);

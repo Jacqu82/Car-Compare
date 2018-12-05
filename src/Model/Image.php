@@ -9,6 +9,8 @@ class Image
 
     private $carId;
 
+    private $motorCycleId;
+
     private $path;
 
     private $createdAt;
@@ -26,6 +28,18 @@ class Image
     public function setCarId($carId)
     {
         $this->carId = $carId;
+
+        return $this;
+    }
+
+    public function getMotorCycleId()
+    {
+        return $this->motorCycleId;
+    }
+
+    public function setMotorCycleId($motorCycleId)
+    {
+        $this->motorCycleId = $motorCycleId;
 
         return $this;
     }

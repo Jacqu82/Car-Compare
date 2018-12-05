@@ -12,11 +12,15 @@ class Container
 
     private $carLoader;
 
+    private $motorCycleLoader;
+
     private $imageService;
 
     private $adminRepository;
 
     private $carRepository;
+
+    private $motorCycleRepository;
 
     private $imageRepository;
 
@@ -54,6 +58,18 @@ class Container
         return $this->carLoader;
     }
 
+    /**
+     * @return MotorCycleLoader
+     */
+    public function getMotorCycleLoader()
+    {
+        if ($this->motorCycleLoader === null) {
+            $this->motorCycleLoader = new MotorCycleLoader($this->getMotorCycleRepository());
+        }
+
+        return $this->motorCycleLoader;
+    }
+
     public function getImageService()
     {
         if ($this->imageService === null) {
@@ -85,6 +101,18 @@ class Container
         }
 
         return $this->carRepository;
+    }
+
+    /**
+     * @return MotorCycleRepository
+     */
+    public function getMotorCycleRepository()
+    {
+        if ($this->motorCycleRepository === null) {
+            $this->motorCycleRepository = new MotorCycleRepository($this->getPDO(), $this);
+        }
+
+        return $this->motorCycleRepository;
     }
 
     /**

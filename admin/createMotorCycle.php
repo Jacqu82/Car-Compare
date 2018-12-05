@@ -4,17 +4,13 @@ session_start();
 
 require __DIR__ . '/../autoload.php';
 
+use Model\MotorCycle;
 use Service\Container;
 
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
     exit();
 }
-
-$container = new Container($configuration);
-$carLoader = $container->getCarLoader();
-$carId = $_GET['id'];
-$car = $carLoader->getOneById($carId);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['name'])) {
@@ -33,17 +29,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($isOk) {
-            $car
+            $motorCycle = new MotorCycle();
+            $motorCycle
                 ->setName($name)
                 ->setNumberOfCylinders($numberOfCylinders)
                 ->setEngineCapacity($engineCapacity)
                 ->setPower($power)
                 ->setAcceleration($acceleration)
                 ->setTopSpeed($topSpeed);
-            $container->getCarRepository()->update($car);
 
-            $_SESSION['edit_success'] = 'Poprawnie edytowano samochód :)';
-            header('Location: carPage.php?id=' . $car->getId());
+            $container = new Container($configuration);
+            $container->getMotorCycleRepository()->saveToDb($motorCycle);
+
+            header('Location: adminPanel.php');
+
+            $_SESSION['validate_success'] = 'Poprawnie dodano motor do bazy :)';
         }
     }
 }
@@ -59,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include '../widgets/header.php'; ?>
 
 <div class="container">
-    <h1 class="text-center text-uppercase">Edytuj samochód</h1>
+    <h1 class="text-center text-uppercase">Dodaj motor</h1>
 
-    <?php include_once 'editForm.php' ?>
+    <?php include_once 'createForm.php' ?>
 </div>
 
 <?php require_once '../widgets/scripts.php'; ?>

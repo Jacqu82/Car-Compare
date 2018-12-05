@@ -2,10 +2,10 @@
 
 namespace Service;
 
-use Model\Car;
+use Model\MotorCycle;
 use PDO;
 
-class CarRepository
+class MotorCycleRepository
 {
     private $pdo;
     private $container;
@@ -16,16 +16,16 @@ class CarRepository
         $this->container = $container;
     }
 
-    public function saveToDb(Car $car)
+    public function saveToDb(MotorCycle $motorCycle)
     {
-        $name = $car->getName();
-        $numberOfCylinders = $car->getNumberOfCylinders();
-        $engineCapacity = $car->getEngineCapacity();
-        $power = $car->getPower();
-        $acceleration = $car->getAcceleration();
-        $topSpeed = $car->getTopSpeed();
+        $name = $motorCycle->getName();
+        $numberOfCylinders = $motorCycle->getNumberOfCylinders();
+        $engineCapacity = $motorCycle->getEngineCapacity();
+        $power = $motorCycle->getPower();
+        $acceleration = $motorCycle->getAcceleration();
+        $topSpeed = $motorCycle->getTopSpeed();
 
-        $sql = "INSERT INTO cars (name, number_of_cylinders, engine_capacity, power, acceleration, top_speed)
+        $sql = "INSERT INTO motorcycles (name, number_of_cylinders, engine_capacity, power, acceleration, top_speed)
                     VALUES (:name, :number_of_cylinders, :engine_capacity, :power, :acceleration, :top_speed)";
 
         $result = $this->pdo->prepare($sql);
@@ -37,24 +37,23 @@ class CarRepository
         $result->bindParam('top_speed', $topSpeed, PDO::PARAM_INT);
         $result->execute();
 
-        $this->container->getImageService()->saveFile($car, $this->pdo->lastInsertId());
-        $this->container->getImageService()->saveImage($car, $this->pdo->lastInsertId());
-
+        $this->container->getImageService()->saveFile($motorCycle, $this->pdo->lastInsertId());
+        $this->container->getImageService()->saveImage($motorCycle, $this->pdo->lastInsertId());
 
         return true;
     }
 
-    public function update(Car $car)
+    public function update(MotorCycle $motorCycle)
     {
-        $id = $car->getId();
-        $name = $car->getName();
-        $numberOfCylinders = $car->getNumberOfCylinders();
-        $engineCapacity = $car->getEngineCapacity();
-        $power = $car->getPower();
-        $acceleration = $car->getAcceleration();
-        $topSpeed = $car->getTopSpeed();
+        $id = $motorCycle->getId();
+        $name = $motorCycle->getName();
+        $numberOfCylinders = $motorCycle->getNumberOfCylinders();
+        $engineCapacity = $motorCycle->getEngineCapacity();
+        $power = $motorCycle->getPower();
+        $acceleration = $motorCycle->getAcceleration();
+        $topSpeed = $motorCycle->getTopSpeed();
 
-        $sql = "UPDATE cars SET name = :name,
+        $sql = "UPDATE motorcycles SET name = :name,
                                 number_of_cylinders = :number_of_cylinders,
                                 engine_capacity = :engine_capacity,
                                 power = :power,
@@ -78,7 +77,7 @@ class CarRepository
 
     public function findAll()
     {
-        $result = $this->pdo->prepare('SELECT * FROM cars ORDER BY name');
+        $result = $this->pdo->prepare('SELECT * FROM motorcycles ORDER BY name');
         $result->execute();
         $cars = $result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -87,21 +86,21 @@ class CarRepository
 
     public function findOneById($id)
     {
-        $result = $this->pdo->prepare('SELECT * FROM cars WHERE id = :id');
+        $result = $this->pdo->prepare('SELECT * FROM motorcycles WHERE id = :id');
         $result->bindParam('id', $id, PDO::PARAM_INT);
         $result->execute();
-        $car = $result->fetch(PDO::FETCH_ASSOC);
+        $motorCycle = $result->fetch(PDO::FETCH_ASSOC);
 
-        if (!$car) {
+        if (!$motorCycle) {
             return null;
         }
 
-        return $car;
+        return $motorCycle;
     }
 
     public function delete($id)
     {
-        $result = $this->pdo->prepare("DELETE FROM cars WHERE id = :id");
+        $result = $this->pdo->prepare("DELETE FROM motorcycles WHERE id = :id");
         $result->bindParam('id', $id, PDO::PARAM_INT);
         $result->execute();
 

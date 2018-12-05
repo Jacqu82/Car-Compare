@@ -17,12 +17,14 @@ class ImageRepository
     public function saveToDB(Image $image)
     {
         $carId = $image->getCarId();
+        $motorCycleId = $image->getMotorCycleId();
         $path = $image->getPath();
 
-        $sql = "INSERT INTO images (car_id, path) VALUES (:car_id, :path)";
+        $sql = "INSERT INTO images (car_id, motorcycle_id, path) VALUES (:car_id, :motorcycle_id, :path)";
         $result = $this->pdo->prepare($sql);
 
         $result->bindParam('car_id', $carId, PDO::PARAM_INT);
+        $result->bindParam('motorcycle_id', $motorCycleId, PDO::PARAM_INT);
         $result->bindParam('path', $path, PDO::PARAM_STR);
         $result->execute();
 

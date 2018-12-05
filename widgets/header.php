@@ -8,6 +8,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <?php if (isset($_SESSION['admin'])): ?>
                         <li><a href="../admin/adminPanel.php">Strona główna Admina</a></li>
+                        <li><a href="../admin/createMotorCycle.php">Dodaj motor do bazy</a></li>
                         <li><a href="../admin/createCar.php">Dodaj samochód do bazy</a></li>
                         <li><a href="../admin/logout.php">Wyloguj</a></li>
                     <?php else: ?>
