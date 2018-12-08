@@ -14,9 +14,9 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $container = new Container($configuration);
-$carLoader = $container->getCarLoader();
-$car = $carLoader->getOneById($_GET['id']);
-$path = $container->getImageRepository()->findOneByCarId($_GET['id']);
+$motorCycleLoader = $container->getMotorCycleLoader();
+$motorCycle = $motorCycleLoader->getOneById($_GET['id']);
+$path = $container->getImageRepository()->findOneByMotorCycleId($_GET['id']);
 $imageService = new ImageService($container);
 
 ?>
@@ -32,13 +32,13 @@ $imageService = new ImageService($container);
 <div class="container">
     <?php
     if (isset($_POST['delete'])) {
-        $carRepository = $container->getCarRepository();
-        $carRepository->delete($_GET['id']);
+        $motorCycleRepository = $container->getMotorCycleRepository();
+        $motorCycleRepository->delete($_GET['id']);
         $pathToDelete = $path['path'];
         $imageService->deleteCarFile($pathToDelete);
-        $imageService->deleteEmptyCarDirectory($car->getId());
+        $imageService->deleteEmptyCarDirectory($motorCycle->getId());
 
-        $_SESSION['delete'] = "Poprawnie usunołeś {$car->getName()}!";
+        $_SESSION['delete'] = "Poprawnie usunołeś {$motorCycle->getName()}!";
         header('Location: carIndexPage.php');
     }
     if (isset($_SESSION['edit_success'])) {
@@ -50,7 +50,7 @@ $imageService = new ImageService($container);
         unset($_SESSION['edit_image']);
     }
     ?>
-    <h1 class="text-center text-uppercase"><?php echo $car->getName(); ?></h1>
+    <h1 class="text-center text-uppercase"><?php echo $motorCycle->getName(); ?></h1>
     <table class="table">
         <thead>
         <tr>
@@ -65,14 +65,14 @@ $imageService = new ImageService($container);
         </thead>
         <tbody>
         <tr>
-            <td><?php echo $car->getName(); ?></td>
-            <td><?php echo $car->getNumberOfCylinders(); ?></td>
-            <td><?php echo $car->getEngineCapacity(); ?></td>
-            <td><?php echo $car->getPower(); ?></td>
-            <td><?php echo $car->getAcceleration(); ?></td>
-            <td><?php echo $car->getTopSpeed(); ?></td>
+            <td><?php echo $motorCycle->getName(); ?></td>
+            <td><?php echo $motorCycle->getNumberOfCylinders(); ?></td>
+            <td><?php echo $motorCycle->getEngineCapacity(); ?></td>
+            <td><?php echo $motorCycle->getPower(); ?></td>
+            <td><?php echo $motorCycle->getAcceleration(); ?></td>
+            <td><?php echo $motorCycle->getTopSpeed(); ?></td>
             <td>
-                <a href="editCar.php?id=<?php echo $car->getId(); ?>" class="btn btn-warning">Edytuj</a>
+                <a href="editCar.php?id=<?php echo $motorCycle->getId(); ?>" class="btn btn-warning">Edytuj</a>
                 <form method="post" action="#">
                     <button type="submit" class="btn btn-danger" name="delete">Usuń</button>
                 </form>
@@ -81,7 +81,7 @@ $imageService = new ImageService($container);
         </tbody>
     </table>
     <img src="<?php echo $path['path']; ?>" alt="Obrazek auta" class="center"/>
-    <a href="editImageCar.php?id=<?php echo $car->getId(); ?>" class="btn btn-warning">Edytuj zdjęcie</a>
+    <a href="editImageCar.php?id=<?php echo $motorCycle->getId(); ?>" class="btn btn-warning">Edytuj zdjęcie</a>
 </div>
 <?php require_once '../widgets/scripts.php'; ?>
 </body>

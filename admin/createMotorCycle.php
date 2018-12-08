@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $container = new Container($configuration);
             $container->getMotorCycleRepository()->saveToDb($motorCycle);
 
-            header('Location: adminPanel.php');
+            header('Location: motorCycleIndexPage.php');
 
             $_SESSION['validate_success'] = 'Poprawnie dodano motor do bazy :)';
         }

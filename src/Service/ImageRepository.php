@@ -56,4 +56,18 @@ class ImageRepository
 
         return $path;
     }
+
+    public function findOneByMotorCycleId($id)
+    {
+        $result = $this->pdo->prepare('SELECT id, path FROM images WHERE motorcycle_id = :id');
+        $result->bindParam('id', $id, PDO::PARAM_INT);
+        $result->execute();
+        $path = $result->fetch(PDO::FETCH_ASSOC);
+
+        if (!$path) {
+            return null;
+        }
+
+        return $path;
+    }
 }

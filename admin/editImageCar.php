@@ -18,11 +18,10 @@ $car = $carLoader->getOneById($_GET['id']);
 $path = $container->getImageRepository()->findOneByCarId($_GET['id']);
 $imageService = new ImageService($container);
 
-//dump($_FILES['image']['error']);die;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'updateImage') {
     if ($_FILES['image']['error'] == 0) {
-        $imageService->updateImage($car->getId(), $car->getName());
+        $imageService->updateImage($car, $car->getId());
 
         $_SESSION['edit_image'] = 'Poprawnie edytowano zdjęcie :)';
         header('Location: carPage.php?id=' . $car->getId());

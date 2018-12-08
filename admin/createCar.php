@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $container = new Container($configuration);
             $container->getCarRepository()->saveToDb($car);
 
-            header('Location: adminPanel.php');
+            header('Location: carIndexPage.php');
 
             $_SESSION['validate_success'] = 'Poprawnie dodano samochód do bazy :)';
         }
