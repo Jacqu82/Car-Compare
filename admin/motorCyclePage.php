@@ -35,11 +35,11 @@ $imageService = new ImageService($container);
         $motorCycleRepository = $container->getMotorCycleRepository();
         $motorCycleRepository->delete($_GET['id']);
         $pathToDelete = $path['path'];
-        $imageService->deleteCarFile($pathToDelete);
-        $imageService->deleteEmptyCarDirectory($motorCycle->getId());
+        $imageService->deleteFile($pathToDelete);
+        $imageService->deleteEmptyDirectory($motorCycle, $motorCycle->getId());
 
         $_SESSION['delete'] = "Poprawnie usunołeś {$motorCycle->getName()}!";
-        header('Location: carIndexPage.php');
+        header('Location: motorCycleIndexPage.php');
     }
     if (isset($_SESSION['edit_success'])) {
         FlashMessagesService::setFlashMessage('success', $_SESSION['edit_success']);
@@ -72,7 +72,7 @@ $imageService = new ImageService($container);
             <td><?php echo $motorCycle->getAcceleration(); ?></td>
             <td><?php echo $motorCycle->getTopSpeed(); ?></td>
             <td>
-                <a href="editCar.php?id=<?php echo $motorCycle->getId(); ?>" class="btn btn-warning">Edytuj</a>
+                <a href="editMotorCycle.php?id=<?php echo $motorCycle->getId(); ?>" class="btn btn-warning">Edytuj</a>
                 <form method="post" action="#">
                     <button type="submit" class="btn btn-danger" name="delete">Usuń</button>
                 </form>
@@ -81,7 +81,7 @@ $imageService = new ImageService($container);
         </tbody>
     </table>
     <img src="<?php echo $path['path']; ?>" alt="Obrazek auta" class="center"/>
-    <a href="editImageCar.php?id=<?php echo $motorCycle->getId(); ?>" class="btn btn-warning">Edytuj zdjęcie</a>
+    <a href="editImageMotorCycle.php?id=<?php echo $motorCycle->getId(); ?>" class="btn btn-warning">Edytuj zdjęcie</a>
 </div>
 <?php require_once '../widgets/scripts.php'; ?>
 </body>

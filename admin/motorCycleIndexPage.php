@@ -48,8 +48,9 @@ $firstLetter = '';
             <?php $firstLetter = $motorCycle->getName()[0]; ?>
             <?php echo $motorCycle->getName()[0] . '<br/>' ?>
         <?php endif; ?>
-        <a class="btn btn-success" href="../admin/motorCyclePage.php?id=<?php echo $motorCycle->getId(); ?>"><?php echo $motorCycle->getName(); ?></a>
-        <img src="<?php echo $path['path']; ?>" alt="Obrazek motorka" class="center" />
+        <a class="btn btn-success"
+           href="../admin/motorCyclePage.php?id=<?php echo $motorCycle->getId(); ?>"><?php echo $motorCycle->getName(); ?></a>
+        <img src="<?php echo $path['path']; ?>" alt="Obrazek motorka" class="center"/>
         <hr/>
     <?php endforeach; ?>
 

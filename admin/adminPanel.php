@@ -5,12 +5,12 @@ session_start();
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
-use Service\FlashMessagesService;
 
 if (!isset($_SESSION['admin'])) {
     header('Location: ../web/index.php');
     exit();
 }
+$container = new Container($configuration);
 $admin = $container->loggedAdmin();
 
 ?>

@@ -35,8 +35,8 @@ $imageService = new ImageService($container);
         $carRepository = $container->getCarRepository();
         $carRepository->delete($_GET['id']);
         $pathToDelete = $path['path'];
-        $imageService->deleteCarFile($pathToDelete);
-        $imageService->deleteEmptyCarDirectory($car->getId());
+        $imageService->deleteFile($pathToDelete);
+        $imageService->deleteEmptyDirectory($car, $car->getId());
 
         $_SESSION['delete'] = "Poprawnie usunołeś {$car->getName()}!";
         header('Location: carIndexPage.php');

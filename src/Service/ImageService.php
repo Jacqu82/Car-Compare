@@ -15,7 +15,7 @@ class ImageService
         $this->container = $container;
     }
 
-    public function getDirectory($object, $objectId)
+    private function getDirectory($object, $objectId)
     {
         switch (true) {
             case $object instanceof Car:
@@ -29,7 +29,7 @@ class ImageService
         }
     }
 
-    public function getFile($object)
+    private function getFile($object)
     {
         $filename = $_FILES['image']['name'];
         $filename = $object->getName() . '-' . time() . substr($filename, strpos($filename, '.'));
@@ -38,7 +38,7 @@ class ImageService
         return $filename;
     }
 
-    public function getFullPath($object, $objectId)
+    private function getFullPath($object, $objectId)
     {
         $filename = $this->getFile($object);
         $path = $this->getDirectory($object, $objectId);
@@ -72,8 +72,8 @@ class ImageService
 
     public function updateImage($object, $objectId)
     {
-        $pathToDelete = $this->container->getImageRepository()->findOneByCarId($objectId);
-        $this->deleteCarFile($pathToDelete['path']);
+        $pathToDelete = $this->getPathToDelete($object, $objectId);
+        $this->deleteFile($pathToDelete['path']);
         $this->saveFile($object, $objectId);
         $pathDB = $this->getFullPath($object, $objectId);
         $this->container->getImageRepository()->updatePath($pathDB, $pathToDelete['id']);
@@ -85,16 +85,33 @@ class ImageService
         move_uploaded_file($_FILES['image']['tmp_name'], $path);
     }
 
-    public function deleteCarFile($path)
+    private function getPathToDelete($object, $objectId)
+    {
+        switch (true) {
+            case $object instanceof Car:
+                $pathToDelete = $this->container->getImageRepository()->findOneByCarId($objectId);
+                break;
+            case $object instanceof MotorCycle:
+                $pathToDelete = $this->container->getImageRepository()->findOneByMotorCycleId($objectId);
+                break;
+
+            default:
+                return false;
+        }
+
+        return $pathToDelete;
+    }
+
+    public function deleteFile($path)
     {
         if (file_exists($path)) {
             unlink($path);
         }
     }
 
-    public function deleteEmptyCarDirectory($carId)
+    public function deleteEmptyDirectory($object, $objectId)
     {
-        $dirToDelete = '../public/content/images/cars/' . $carId;
+        $dirToDelete = $this->getDirectory($object, $objectId);
         if (file_exists($dirToDelete)) {
             rmdir($dirToDelete);
         }

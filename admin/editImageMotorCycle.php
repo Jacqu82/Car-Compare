@@ -13,18 +13,18 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $container = new Container($configuration);
-$carLoader = $container->getCarLoader();
-$car = $carLoader->getOneById($_GET['id']);
-$path = $container->getImageRepository()->findOneByCarId($_GET['id']);
+$motorCycleLoader = $container->getMotorCycleLoader();
+$motorCycle = $motorCycleLoader->getOneById($_GET['id']);
+$path = $container->getImageRepository()->findOneByMotorCycleId($_GET['id']);
 $imageService = new ImageService($container);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'updateImage') {
     if ($_FILES['image']['error'] == 0) {
-        $imageService->updateImage($car, $car->getId());
+        $imageService->updateImage($motorCycle, $motorCycle->getId());
 
         $_SESSION['edit_image'] = 'Poprawnie edytowano zdjęcie :)';
-        header('Location: carPage.php?id=' . $car->getId());
+        header('Location: motorCyclePage.php?id=' . $motorCycle->getId());
     }
 }
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] == 'updateImage') 
 <div class="container">
     <h1 class="text-center">Edytuj zdjęcie</h1>
 
-    <img src="<?php echo $path['path']; ?>" alt="Obrazek auta" class="center"/>
+    <img src="<?php echo $path['path']; ?>" alt="Obrazek motorka" class="center"/>
 
     <?php include_once 'editImageForm.html'; ?>
 </div>

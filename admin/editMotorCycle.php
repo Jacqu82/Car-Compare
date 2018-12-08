@@ -12,8 +12,8 @@ if (!isset($_SESSION['admin'])) {
 }
 
 $container = new Container($configuration);
-$carLoader = $container->getCarLoader();
-$car = $carLoader->getOneById($_GET['id']);
+$motorCycleLoader = $container->getMotorCycleLoader();
+$motorCycle = $motorCycleLoader->getOneById($_GET['id']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['name'])) {
@@ -32,17 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         if ($isOk) {
-            $car
+            $motorCycle
                 ->setName($name)
                 ->setNumberOfCylinders($numberOfCylinders)
                 ->setEngineCapacity($engineCapacity)
                 ->setPower($power)
                 ->setAcceleration($acceleration)
                 ->setTopSpeed($topSpeed);
-            $container->getCarRepository()->update($car);
+            $container->getMotorCycleRepository()->update($motorCycle);
 
-            $_SESSION['edit_success'] = 'Poprawnie edytowano samochód :)';
-            header('Location: carPage.php?id=' . $car->getId());
+            $_SESSION['edit_success'] = 'Poprawnie edytowano motorek :)';
+            header('Location: motorCyclePage.php?id=' . $motorCycle->getId());
         }
     }
 }
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include '../widgets/header.php'; ?>
 
 <div class="container">
-    <h1 class="text-center text-uppercase">Edytuj samochód</h1>
+    <h1 class="text-center text-uppercase">Edytuj motorek</h1>
 
     <?php include_once 'editForm.php' ?>
 </div>
