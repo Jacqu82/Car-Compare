@@ -23,12 +23,14 @@ $admin = $container->loggedAdmin();
 <body>
 <?php include '../widgets/header.php'; ?>
 
-<div class="container">
+<div class="container text-center">
 
-    <h1 class="text-center text-uppercase">Witaj <?php echo $admin['login'] ?>!</h1>
+    <h1 class="text-uppercase">Witaj <?php echo $admin['login'] ?>!</h1>
 
-    <a class="btn btn-success" href="carIndexPage.php">Autka</a>
-    <a class="btn btn-success" href="motorCycleIndexPage.php">Motorki</a>
+    <a href="carIndexPage.php" class="btn btn-success">Autka</a>
+    <a href="motorCycleIndexPage.php" class="btn btn-danger">Motorki</a>
+    <a href="../admin/createMotorCycle.php" class="btn btn-primary">Dodaj motor do bazy</a>
+    <a href="../admin/createCar.php" class="btn btn-default">Dodaj samochód do bazy</a>
 
 </div>
 

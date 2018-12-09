@@ -5,7 +5,6 @@ session_start();
 require __DIR__ . '/../autoload.php';
 
 use Service\Container;
-use Service\FlashMessagesService;
 
 $container = new Container($configuration);
 $carLoader = $container->getCarLoader();
@@ -23,21 +22,11 @@ $firstLetter = '';
 <body>
 <?php include '../widgets/header.php'; ?>
 
-<div class="container">
+<div class="container text-center">
 
-    <h1 class="text-center text-uppercase">Porównywarka samochodów</h1>
-
-
-    <?php foreach ($cars as $car): ?>
-        <?php $path = $container->getImageRepository()->findOneByCarId($car->getId()); ?>
-        <?php if ($firstLetter != $car->getName()[0]): ?>
-            <?php $firstLetter = $car->getName()[0]; ?>
-            <?php echo $car->getName()[0] . '<br/>' ?>
-        <?php endif; ?>
-        <a class="btn btn-success" href="../admin/carPage.php?id=<?php echo $car->getId(); ?>"><?php echo $car->getName(); ?></a>
-        <img src="<?php echo $path['path']; ?>" alt="Obrazek auta" class="center" />
-        <hr/>
-    <?php endforeach; ?>
+    <h1 class="text-uppercase">Porównywarka samochodów</h1>
+    <a href="carIndexPage.php" class="btn btn-success">Autka</a>
+    <a href="motorCycleIndexPage.php" class="btn btn-success">Motorki</a>
 
 </div>
 
