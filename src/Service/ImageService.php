@@ -44,7 +44,7 @@ class ImageService
         $path = $this->getDirectory($object, $objectId);
         if (!file_exists($path)) {
             $oldmask = umask(0);
-            mkdir($path, 0777);
+            mkdir($path, 0755);
             umask($oldmask);
         }
         $path .= $filename;

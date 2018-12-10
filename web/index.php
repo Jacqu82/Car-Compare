@@ -4,13 +4,6 @@ session_start();
 
 require __DIR__ . '/../autoload.php';
 
-use Service\Container;
-
-$container = new Container($configuration);
-$carLoader = $container->getCarLoader();
-$cars = $carLoader->getAll();
-$firstLetter = '';
-
 ?>
 
 
@@ -25,8 +18,10 @@ $firstLetter = '';
 <div class="container text-center">
 
     <h1 class="text-uppercase">Porównywarka samochodów</h1>
-    <a href="carIndexPage.php" class="btn btn-success">Autka</a>
+    <a href="carIndexPage.php" class="btn btn-primary">Autka</a>
     <a href="motorCycleIndexPage.php" class="btn btn-success">Motorki</a>
+    <a href="selectCars.php" class="btn btn-warning">Porównaj autka</a>
+    <a href="compareMotorCycles.php" class="btn btn-danger">Porównaj motorki</a>
 
 </div>
 

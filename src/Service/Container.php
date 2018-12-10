@@ -16,6 +16,8 @@ class Container
 
     private $imageService;
 
+    private $vehicleCompare;
+
     private $adminRepository;
 
     private $carRepository;
@@ -77,6 +79,15 @@ class Container
         }
 
         return $this->imageService;
+    }
+
+    public function getVehicleCompare()
+    {
+        if ($this->vehicleCompare === null) {
+            $this->vehicleCompare = new VehicleCompare($this);
+        }
+
+        return $this->vehicleCompare;
     }
 
     /**
