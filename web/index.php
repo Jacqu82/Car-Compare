@@ -21,7 +21,7 @@ require __DIR__ . '/../autoload.php';
     <a href="carIndexPage.php" class="btn btn-primary">Autka</a>
     <a href="motorCycleIndexPage.php" class="btn btn-success">Motorki</a>
     <a href="selectCars.php" class="btn btn-warning">Porównaj autka</a>
-    <a href="compareMotorCycles.php" class="btn btn-danger">Porównaj motorki</a>
+    <a href="selectMotorCycles.php" class="btn btn-danger">Porównaj motorki</a>
 
 </div>
 

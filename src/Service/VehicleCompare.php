@@ -2,7 +2,7 @@
 
 namespace Service;
 
-use Model\Car;
+use Model\Vehicle;
 
 class VehicleCompare
 {
@@ -13,55 +13,80 @@ class VehicleCompare
         $this->container = $container;
     }
 
-    public function compareCylinders(Car $car1, Car $car2)
+    /**
+     * @param Vehicle $vehicle1
+     * @param Vehicle $vehicle2
+     * @return string
+     */
+    public function compareCylinders($vehicle1, $vehicle2)
     {
-        if ($car1->getNumberOfCylinders() > $car2->getNumberOfCylinders()) {
+        if ($vehicle1->getNumberOfCylinders() > $vehicle2->getNumberOfCylinders()) {
             return 'green';
-        } elseif ($car1->getNumberOfCylinders() < $car2->getNumberOfCylinders()) {
+        } elseif ($vehicle1->getNumberOfCylinders() < $vehicle2->getNumberOfCylinders()) {
             return 'red';
         } else {
             return '';
         }
     }
 
-    public function compareEngineCapacity(Car $car1, Car $car2)
+    /**
+     * @param Vehicle $vehicle1
+     * @param Vehicle $vehicle2
+     * @return string
+     */
+    public function compareEngineCapacity($vehicle1, $vehicle2)
     {
-        if ($car1->getEngineCapacity() > $car2->getEngineCapacity()) {
+        if ($vehicle1->getEngineCapacity() > $vehicle2->getEngineCapacity()) {
             return 'green';
-        } elseif ($car1->getEngineCapacity() < $car2->getEngineCapacity()) {
+        } elseif ($vehicle1->getEngineCapacity() < $vehicle2->getEngineCapacity()) {
             return 'red';
         } else {
             return '';
         }
     }
 
-    public function comparePower(Car $car1, Car $car2)
+    /**
+     * @param Vehicle $vehicle1
+     * @param Vehicle $vehicle2
+     * @return string
+     */
+    public function comparePower($vehicle1, $vehicle2)
     {
-        if ($car1->getPower() > $car2->getPower()) {
+        if ($vehicle1->getPower() > $vehicle2->getPower()) {
             return 'green';
-        } elseif ($car1->getPower() < $car2->getPower()) {
+        } elseif ($vehicle1->getPower() < $vehicle2->getPower()) {
             return 'red';
         } else {
             return '';
         }
     }
 
-    public function compareAcceleration(Car $car1, Car $car2)
+    /**
+     * @param Vehicle $vehicle1
+     * @param Vehicle $vehicle2
+     * @return string
+     */
+    public function compareAcceleration($vehicle1, $vehicle2)
     {
-        if ($car1->getAcceleration() > $car2->getAcceleration()) {
+        if ($vehicle1->getAcceleration() > $vehicle2->getAcceleration()) {
             return 'red';
-        } elseif ($car1->getAcceleration() < $car2->getAcceleration()) {
+        } elseif ($vehicle1->getAcceleration() < $vehicle2->getAcceleration()) {
             return 'green';
         } else {
             return '';
         }
     }
 
-    public function compareSpeed(Car $car1, Car $car2)
+    /**
+     * @param Vehicle $vehicle1
+     * @param Vehicle $vehicle2
+     * @return string
+     */
+    public function compareSpeed($vehicle1, $vehicle2)
     {
-        if ($car1->getTopSpeed() > $car2->getTopSpeed()) {
+        if ($vehicle1->getTopSpeed() > $vehicle2->getTopSpeed()) {
             return 'green';
-        } elseif ($car1->getTopSpeed() < $car2->getTopSpeed()) {
+        } elseif ($vehicle1->getTopSpeed() < $vehicle2->getTopSpeed()) {
             return 'red';
         } else {
             return '';

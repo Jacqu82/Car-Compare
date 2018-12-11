@@ -27,10 +27,10 @@ $admin = $container->loggedAdmin();
 
     <h1 class="text-uppercase">Witaj <?php echo $admin['login'] ?>!</h1>
 
-    <a href="carIndexPage.php" class="btn btn-success">Autka</a>
-    <a href="motorCycleIndexPage.php" class="btn btn-danger">Motorki</a>
-    <a href="../admin/createMotorCycle.php" class="btn btn-primary">Dodaj motor do bazy</a>
-    <a href="../admin/createCar.php" class="btn btn-default">Dodaj samochód do bazy</a>
+    <a href="carIndexPage.php" class="btn btn-primary">Autka</a>
+    <a href="motorCycleIndexPage.php" class="btn btn-success">Motorki</a>
+    <a href="../admin/createMotorCycle.php" class="btn btn-warning">Dodaj motor do bazy</a>
+    <a href="../admin/createCar.php" class="btn btn-danger">Dodaj samochód do bazy</a>
 
 </div>
 
