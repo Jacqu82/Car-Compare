@@ -4,7 +4,7 @@ namespace Service;
 
 use Model\MotorCycle;
 
-class MotorCycleLoader
+class MotorCycleLoader implements LoaderInterface
 {
     private $motorCycleRepository;
 

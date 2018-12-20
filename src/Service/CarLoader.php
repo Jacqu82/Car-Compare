@@ -4,7 +4,7 @@ namespace Service;
 
 use Model\Car;
 
-class CarLoader
+class CarLoader implements LoaderInterface
 {
     private $carRepository;
 

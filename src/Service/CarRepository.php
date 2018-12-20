@@ -2,10 +2,10 @@
 
 namespace Service;
 
-use Model\Car;
+use Model\Vehicle;
 use PDO;
 
-class CarRepository
+class CarRepository implements RepositoryInterface
 {
     private $pdo;
     private $container;
@@ -16,14 +16,14 @@ class CarRepository
         $this->container = $container;
     }
 
-    public function saveToDb(Car $car)
+    public function saveToDb(Vehicle $object)
     {
-        $name = $car->getName();
-        $numberOfCylinders = $car->getNumberOfCylinders();
-        $engineCapacity = $car->getEngineCapacity();
-        $power = $car->getPower();
-        $acceleration = $car->getAcceleration();
-        $topSpeed = $car->getTopSpeed();
+        $name = $object->getName();
+        $numberOfCylinders = $object->getNumberOfCylinders();
+        $engineCapacity = $object->getEngineCapacity();
+        $power = $object->getPower();
+        $acceleration = $object->getAcceleration();
+        $topSpeed = $object->getTopSpeed();
 
         $sql = "INSERT INTO cars (name, number_of_cylinders, engine_capacity, power, acceleration, top_speed)
                     VALUES (:name, :number_of_cylinders, :engine_capacity, :power, :acceleration, :top_speed)";
@@ -37,22 +37,21 @@ class CarRepository
         $result->bindParam('top_speed', $topSpeed, PDO::PARAM_INT);
         $result->execute();
 
-        $this->container->getImageService()->saveFile($car, $this->pdo->lastInsertId());
-        $this->container->getImageService()->saveImage($car, $this->pdo->lastInsertId());
-
+        $this->container->getImageService()->saveFile($object, $this->pdo->lastInsertId());
+        $this->container->getImageService()->saveImage($object, $this->pdo->lastInsertId());
 
         return true;
     }
 
-    public function update(Car $car)
+    public function update(Vehicle $object)
     {
-        $id = $car->getId();
-        $name = $car->getName();
-        $numberOfCylinders = $car->getNumberOfCylinders();
-        $engineCapacity = $car->getEngineCapacity();
-        $power = $car->getPower();
-        $acceleration = $car->getAcceleration();
-        $topSpeed = $car->getTopSpeed();
+        $id = $object->getId();
+        $name = $object->getName();
+        $numberOfCylinders = $object->getNumberOfCylinders();
+        $engineCapacity = $object->getEngineCapacity();
+        $power = $object->getPower();
+        $acceleration = $object->getAcceleration();
+        $topSpeed = $object->getTopSpeed();
 
         $sql = "UPDATE cars SET name = :name,
                                 number_of_cylinders = :number_of_cylinders,
